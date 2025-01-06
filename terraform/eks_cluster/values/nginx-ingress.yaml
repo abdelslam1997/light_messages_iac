@@ -1,0 +1,9 @@
+# Override the default values for the nginx-ingress helm chart
+controller:
+  ingressClassResource:
+    name: external-nginx
+  service:
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-type: external
+      service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+      service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
