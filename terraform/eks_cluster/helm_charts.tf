@@ -1,4 +1,4 @@
-### Install AWS Load Balancer controller Helm chart for Kubernetes
+### Install AWS Load Balancer controller Helm chart for Kubernetes to manage AWS Load Balancers (ALB, NLB)
 ### Source: https://artifacthub.io/packages/helm/aws/aws-load-balancer-controller
 resource "helm_release" "aws_lbc" {
   name = "aws-load-balancer-controller"
@@ -27,7 +27,7 @@ resource "helm_release" "aws_lbc" {
   depends_on = [module.eks.worker_nodes]
 }
 
-### Install ingress-nginx: Ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer
+### Install ingress-nginx: Ingress controller for Kubernetes - Using NGINX as a reverse proxy
 ### Source: https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx
 resource "helm_release" "external_nginx" {
   name = "external"

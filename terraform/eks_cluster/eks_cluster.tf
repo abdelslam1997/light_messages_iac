@@ -7,9 +7,13 @@ module "eks" {
 
   # EKS Addons
   cluster_addons = {
+    # Provides DNS-based service discovery for the cluster
     coredns                = {}
+    # Enables IAM roles for service accounts (IRSA)
     eks-pod-identity-agent = {}
+    # Handles network routing and load-balancing for Kubernetes Services
     kube-proxy             = {}
+    # AWS VPC CNI (Container Networking Interface) plugin manages Pod networking
     vpc-cni                = {}
   }
 
@@ -22,17 +26,16 @@ module "eks" {
   cluster_endpoint_public_access = true
 
 
-  # Allow the creator
   self_managed_node_groups = {
     worker_nodes = {
       ### Worker nodes configuration
       ami_type      = "AL2_x86_64"
-      instance_type = "t3.small"
+      instance_type = "t2.micro"
       capacity_type = "ON_DEMAND"
       ### Scaling configuration
       min_size     = 2
       max_size     = 5
-      desired_size = 2
+      desired_size = 3
     }
   }
 

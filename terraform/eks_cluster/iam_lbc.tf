@@ -1,3 +1,22 @@
+# AWS Load Balancer Controller IAM Configuration
+#
+# This configuration sets up the necessary IAM roles and policies for the AWS Load Balancer Controller
+# to function properly in an EKS cluster.
+#
+# Resources created:
+# - IAM role with trust policy allowing EKS pods to assume the role
+# - IAM policy with permissions required by AWS Load Balancer Controller
+# - Role-policy attachment
+# - EKS Pod Identity Association for the Load Balancer Controller service account
+#
+# The Load Balancer Controller runs in the kube-system namespace and requires specific IAM permissions
+# to create and manage AWS Application Load Balancers (ALB) and Network Load Balancers (NLB).
+#
+# Dependencies:
+# - Requires an existing EKS cluster
+# - Requires the AWSLoadBalancerController.json policy file in the ./policies directory
+# - Requires the aws-load-balancer-controller service account to exist in kube-system namespace
+
 data "aws_iam_policy_document" "aws_lbc" {
   statement {
     effect = "Allow"
