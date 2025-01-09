@@ -8,13 +8,13 @@ module "eks" {
   # EKS Addons
   cluster_addons = {
     # Provides DNS-based service discovery for the cluster
-    coredns                = {}
+    coredns = {}
     # Enables IAM roles for service accounts (IRSA)
     eks-pod-identity-agent = {}
     # Handles network routing and load-balancing for Kubernetes Services
-    kube-proxy             = {}
+    kube-proxy = {}
     # AWS VPC CNI (Container Networking Interface) plugin manages Pod networking
-    vpc-cni                = {}
+    vpc-cni = {}
   }
 
   vpc_id     = module.vpc.vpc_id
@@ -36,6 +36,11 @@ module "eks" {
       min_size     = 2
       max_size     = 5
       desired_size = 3
+    }
+    # REQUIRED for Cluster Autoscaler auto-discovery
+    additional_tags = {
+      "k8s.io/cluster-autoscaler/enabled"                   = "true"
+      "k8s.io/cluster-autoscaler/${local.eks_cluster_name}" = "owned"
     }
   }
 

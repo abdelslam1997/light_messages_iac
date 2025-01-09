@@ -23,11 +23,13 @@ provider "aws" {
 ###########################################
 ############ HELM PROVIDER ################
 data "aws_eks_cluster" "eks_cluster" {
-  name = module.eks.cluster_name
+  name       = module.eks.cluster_name
+  depends_on = [module.eks.worker_nodes]
 }
 
 data "aws_eks_cluster_auth" "cluster_auth" {
-  name = module.eks.cluster_name
+  name       = module.eks.cluster_name
+  depends_on = [module.eks.worker_nodes]
 }
 
 provider "helm" {

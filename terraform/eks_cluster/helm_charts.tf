@@ -1,3 +1,47 @@
+### Instal Metrics Server
+### Source: https://artifacthub.io/packages/helm/metrics-server/metrics-server
+resource "helm_release" "metrics_server" {
+  name = "metrics-server"
+
+  repository = "https://kubernetes-sigs.github.io/metrics-server/"
+  chart      = "metrics-server"
+  namespace  = "kube-system"
+  version    = "3.12.2"
+
+  values = [file("${path.module}/values/metrics-server.yaml")]
+
+  depends_on = [module.eks.worker_nodes]
+}
+
+### Install Cluster Autoscaler
+### source: https://artifacthub.io/packages/helm/cluster-autoscaler/cluster-autoscaler
+resource "helm_release" "cluster_autoscaler" {
+  name = "autoscaler"
+
+  repository = "https://kubernetes.github.io/autoscaler"
+  chart      = "cluster-autoscaler"
+  namespace  = "kube-system"
+  version    = "9.45.0"
+
+  set {
+    name  = "rbac.serviceAccount.name"
+    value = "cluster-autoscaler"
+  }
+
+  set {
+    name  = "autoDiscovery.clusterName"
+    value = module.eks.cluster_name
+  }
+
+  # MUST be updated to match your region 
+  set {
+    name  = "awsRegion"
+    value = var.aws_region
+  }
+
+  depends_on = [helm_release.metrics_server]
+}
+
 ### Install AWS Load Balancer controller Helm chart for Kubernetes to manage AWS Load Balancers (ALB, NLB)
 ### Source: https://artifacthub.io/packages/helm/aws/aws-load-balancer-controller
 resource "helm_release" "aws_lbc" {
@@ -39,7 +83,7 @@ resource "helm_release" "external_nginx" {
 
   version = "4.12.0"
 
-  values = [file("${path.module}/values/nginx-ingress.yaml")]
+  values = [(file("${path.module}/values/nginx-ingress.yaml"))]
 
   depends_on = [helm_release.aws_lbc]
 }
