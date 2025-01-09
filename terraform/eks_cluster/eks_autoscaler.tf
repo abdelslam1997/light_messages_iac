@@ -19,10 +19,10 @@ resource "aws_iam_role" "cluster_autoscaler" {
 }
 
 resource "aws_iam_policy" "cluster_autoscaler" {
-  name   = "${module.eks.cluster_name}-cluster-autoscaler"
+  name = "${module.eks.cluster_name}-cluster-autoscaler"
   policy = replace(
-    file("${path.module}/policies/EksAutoScaler.json"), 
-    "<my-cluster>", 
+    file("${path.module}/policies/EksAutoScaler.json"),
+    "<my-cluster>",
     module.eks.cluster_name
   )
 }

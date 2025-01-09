@@ -33,14 +33,15 @@ module "eks" {
       instance_type = "t2.micro"
       capacity_type = "ON_DEMAND"
       ### Scaling configuration
-      min_size     = 2
-      max_size     = 5
+      min_size = 2
+      max_size = 6
+      # This value is ignored after the initial creation
       desired_size = 3
-    }
-    # REQUIRED for Cluster Autoscaler auto-discovery
-    additional_tags = {
-      "k8s.io/cluster-autoscaler/enabled"                   = "true"
-      "k8s.io/cluster-autoscaler/${local.eks_cluster_name}" = "owned"
+      ### Node Group Labels
+      labels = {
+        "k8s.io/cluster-autoscaler/enabled"                   = "true"
+        "k8s.io/cluster-autoscaler/${local.eks_cluster_name}" = "owned"
+      }
     }
   }
 
