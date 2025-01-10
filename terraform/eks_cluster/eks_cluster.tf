@@ -30,21 +30,21 @@ module "eks" {
     worker_nodes = {
       ### Worker nodes configuration
       ami_type      = "AL2_x86_64"
-      instance_type = "t2.micro"
+      instance_type = "t3.medium"
       capacity_type = "ON_DEMAND"
       ### Scaling configuration
       min_size = 2
-      max_size = 6
+      max_size = 5
       # This value is ignored after the initial creation
-      desired_size = 3
-      ### Node Group Labels
-      labels = {
-        "k8s.io/cluster-autoscaler/enabled"                   = "true"
-        "k8s.io/cluster-autoscaler/${local.eks_cluster_name}" = "owned"
-      }
+      desired_size = 2
     }
   }
 
-  tags = local.tags
+  tags = merge(local.tags, {
+    "k8s.io/cluster-autoscaler/enabled"                   = "true"
+    "k8s.io/cluster-autoscaler/${local.eks_cluster_name}" = "owned"
+  })
+
+  depends_on = [module.vpc.vpc_id, module.vpc.private_subnets]
 
 }
