@@ -15,3 +15,17 @@ variable "environment" {
   description = "Environment"
   default     = "dev"
 }
+
+variable "ssh_server_key_secret_arn" {
+  type        = string
+  description = "SSH private key secret ARN"
+  # Set in env var
+
+}
+
+variable "light_messages_secrets_arn" {
+  type        = string
+  description = "Light messages secrets ARN"
+  # Set in env var
+
+}

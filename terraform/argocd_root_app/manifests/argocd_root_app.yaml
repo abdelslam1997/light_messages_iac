@@ -1,0 +1,26 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-root
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:abdelslam1997/light_messages_iac.git
+    targetRevision: HEAD
+    path: 'apps/dev/' # Path to the application manifests
+  destination:
+    server: 'https://kubernetes.default.svc'
+  syncPolicy:
+    automated:
+      prune: true # Prune resources that are not in the repo
+      selfHeal: true # Self-heal resources that are out-of-sync
+      allowEmpty: false # Do not allow an empty repo to sync
+    syncOptions:
+      - Validate=true
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground # Prune resources with the foreground policy
+      - PruneLast=true # Prune the last applied resources

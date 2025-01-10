@@ -107,3 +107,21 @@ resource "helm_release" "cert_manager" {
 
   depends_on = [helm_release.external_nginx]
 }
+
+### Install ArgoCD: Declarative GitOps continuous delivery tool for Kubernetes
+### Source: https://artifacthub.io/packages/helm/argo/argo-cd
+resource "helm_release" "argocd" {
+  name             = "argocd"
+  repository       = "https://argoproj.github.io/argo-helm"
+  chart            = "argo-cd"
+  namespace        = "argocd"
+  create_namespace = true
+
+  version = "7.7.15"
+  values  = [file("./values/argocd.yaml")]
+
+  depends_on = [
+    data.aws_secretsmanager_secret.ssh_private_key,
+    data.aws_secretsmanager_secret.light_messages_secrets,
+  ]
+}
