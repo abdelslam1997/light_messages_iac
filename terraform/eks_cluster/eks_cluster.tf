@@ -6,6 +6,7 @@ module "eks" {
   cluster_version = "1.31"
 
   # EKS Addons
+  bootstrap_self_managed_addons = true
   cluster_addons = {
     # Provides DNS-based service discovery for the cluster
     coredns = {}
@@ -15,6 +16,8 @@ module "eks" {
     kube-proxy = {}
     # AWS VPC CNI (Container Networking Interface) plugin manages Pod networking
     vpc-cni = {}
+    # AWS EBS CSI Driver for Kubernetes
+    aws-ebs-csi-driver = {}
   }
 
   vpc_id     = module.vpc.vpc_id
@@ -45,6 +48,6 @@ module "eks" {
     "k8s.io/cluster-autoscaler/${local.eks_cluster_name}" = "owned"
   })
 
-  depends_on = [module.vpc.vpc_id, module.vpc.private_subnets]
+  depends_on = [module.vpc]
 
 }

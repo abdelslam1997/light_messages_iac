@@ -3,29 +3,8 @@ kind: Ingress
 metadata:
   name: light-messages-ingress
   namespace: default
-  annotations:
-    # Tells the AWS Load Balancer Controller to create an ALB
-    kubernetes.io/ingress.class: alb
-
-    # Make the ALB publicly accessible
-    alb.ingress.kubernetes.io/scheme: internet-facing
-
-    # Use IP targets (usually correct for EKS + VPC networking)
-    alb.ingress.kubernetes.io/target-type: ip
-
-    # Enable mime type 
-    alb.ingress.kubernetes.io/enable-mime-types: "true"
-
-    # (Optional) If you must specify subnets directly, uncomment the following:
-    # alb.ingress.kubernetes.io/subnets: subnet-12345,subnet-67890
-
-    # (Optional) If you need an SSL certificate, uncomment and put your ARN:
-    # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:...
-    
-    # (Optional) Health check endpoint
-    # alb.ingress.kubernetes.io/healthcheck-path: /health
-
 spec:
+  ingressClassName: external-nginx
   rules:
     - http:
         paths:

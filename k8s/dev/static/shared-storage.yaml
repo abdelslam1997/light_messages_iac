@@ -14,7 +14,7 @@ metadata:
   name: shared-storage-pvc
 spec:
   accessModes:
-    - ReadWriteOnce  # Changed from ReadWriteMany since EBS only supports ReadWriteOnce
+    - ReadWriteOnce
   storageClassName: ebs-sc
   resources:
     requests:
