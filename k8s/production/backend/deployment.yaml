@@ -15,16 +15,6 @@ spec:
       labels:
         app: light-messages-web
     spec:
-      affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - static-file-server
-            topologyKey: "kubernetes.io/hostname"
       containers:
         - name: backend-web
           image: abdelslam1997/light_messages_backend:latest
