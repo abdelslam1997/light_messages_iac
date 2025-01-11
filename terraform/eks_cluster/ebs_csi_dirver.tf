@@ -58,10 +58,10 @@ resource "aws_eks_pod_identity_association" "ebs_csi_driver" {
 }
 
 resource "aws_eks_addon" "ebs_csi_driver" {
-  cluster_name             = module.eks.cluster_name
-  addon_name               = "aws-ebs-csi-driver"
+  cluster_name = module.eks.cluster_name
+  addon_name   = "aws-ebs-csi-driver"
   # addon_version            = "v1.30.0-eksbuild.1"
   service_account_role_arn = aws_iam_role.ebs_csi_driver.arn
   # conflict resolution
-  preserve                 = false
+  preserve = false
 }

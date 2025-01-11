@@ -13,7 +13,7 @@ variable "vpc_cidr" {
 variable "environment" {
   type        = string
   description = "Environment"
-  default     = "dev"
+  default     = "production"
 }
 
 variable "ssh_server_key_secret_arn" {

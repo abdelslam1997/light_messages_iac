@@ -7,13 +7,13 @@ variable "aws_region" {
 variable "environment" {
   type        = string
   description = "Environment"
-  default     = "dev"
+  default     = "production"
 }
 
 variable "eks_cluster_name" {
   type        = string
   description = "EKS cluster name"
-  default     = "dev-eks-cluster"
+  default     = "production-eks-cluster"
 
 }
 
