@@ -48,14 +48,3 @@ spec:
                 name: light-messages-secrets
             - secretRef:
                 name: django-s3-credentials
-          volumeMounts:
-            - name: shared-storage
-              mountPath: /app/static
-              subPath: static
-            - name: shared-storage
-              mountPath: /app/media
-              subPath: media
-      volumes:
-        - name: shared-storage
-          persistentVolumeClaim:
-            claimName: shared-storage-pvc
