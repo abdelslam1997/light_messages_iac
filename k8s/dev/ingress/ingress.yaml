@@ -4,8 +4,16 @@ metadata:
   name: light-messages-ingress
   namespace: default
   annotations:
-    # Make sure mime-type is set 
-    nginx.ingress.kubernetes.io/enable-rewrite-log: "true" 
+    # Add annotations to this layer 7 load balancer
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+    nginx.ingress.kubernetes.io/cors-expose-headers: "Content-Length,Content-Range"
+    
 spec:
   ingressClassName: external-nginx
   rules:
