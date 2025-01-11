@@ -16,10 +16,6 @@ module "eks" {
     kube-proxy = {}
     # AWS VPC CNI (Container Networking Interface) plugin manages Pod networking
     vpc-cni = {}
-    # AWS EBS CSI Driver for Kubernetes
-    aws-ebs-csi-driver = {
-      service_account_role_arn = aws_iam_role.ebs_csi_driver.arn
-    }
   }
 
   vpc_id     = module.vpc.vpc_id

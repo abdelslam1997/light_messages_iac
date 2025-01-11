@@ -3,6 +3,9 @@ kind: Ingress
 metadata:
   name: light-messages-ingress
   namespace: default
+  annotations:
+    # Make sure mime-type is set 
+    nginx.ingress.kubernetes.io/enable-rewrite-log: "true" 
 spec:
   ingressClassName: external-nginx
   rules:
