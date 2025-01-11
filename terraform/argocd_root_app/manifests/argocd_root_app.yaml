@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: git@github.com:abdelslam1997/light_messages_iac.git
     targetRevision: HEAD
-    path: 'apps/dev/' # Path to the application manifests
+    path: 'apps/production/' # Path to the application manifests
   destination:
     server: 'https://kubernetes.default.svc'
   syncPolicy:

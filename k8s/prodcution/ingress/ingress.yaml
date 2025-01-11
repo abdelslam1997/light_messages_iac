@@ -22,17 +22,3 @@ spec:
                 name: backend-service
                 port:
                   number: 8000
-          - path: /static/
-            pathType: Prefix
-            backend:
-              service:
-                name: static-file-server
-                port:
-                  number: 80
-          - path: /media/
-            pathType: Prefix
-            backend:
-              service:
-                name: static-file-server
-                port:
-                  number: 80

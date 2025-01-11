@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: light-messages-channels
+  name: light-messages-web
   namespace: default  # Add explicit namespace
   labels:
-    app: light-messages-channels
+    app: light-messages-web
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: light-messages-channels
+      app: light-messages-web
   template:
     metadata:
       labels:
-        app: light-messages-channels
+        app: light-messages-web
     spec:
       affinity:
         podAffinity:
@@ -26,11 +26,11 @@ spec:
                 - static-file-server
             topologyKey: "kubernetes.io/hostname"
       containers:
-        - name: backend-channels
+        - name: backend-web
           image: abdelslam1997/light_messages_backend:latest
           command: ["/bin/sh", "-c", "/start.sh"]
           ports:
-            - name: websocket
+            - name: http
               containerPort: 8000
               protocol: TCP
           resources:
@@ -42,10 +42,12 @@ spec:
               memory: "256Mi"
           env:
             - name: SERVICE_TYPE
-              value: "channel"
+              value: "web"
           envFrom:
             - secretRef:
                 name: light-messages-secrets
+            - secretRef:
+                name: django-s3-credentials
           volumeMounts:
             - name: shared-storage
               mountPath: /app/static

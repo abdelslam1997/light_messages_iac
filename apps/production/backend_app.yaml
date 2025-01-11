@@ -2,14 +2,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: light-messages-channels
+  name: light-messages-web
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: git@github.com:abdelslam1997/light_messages_iac.git
     targetRevision: main
-    path: k8s/dev/channels
+    path: k8s/production/backend
   destination:
     server: https://kubernetes.default.svc
     namespace: default

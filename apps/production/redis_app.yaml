@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: git@github.com:abdelslam1997/light_messages_iac.git
     targetRevision: main
-    path: k8s/dev/redis
+    path: k8s/production/redis
   destination:
     server: https://kubernetes.default.svc
     namespace: default
