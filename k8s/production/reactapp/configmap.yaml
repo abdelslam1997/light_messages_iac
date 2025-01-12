@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: reactapp-config
+  namespace: default
+data:
+  REACT_APP_API_BASE_URL: "http://k8s-ingress-external-9a3bc43ef0-48d9d81af72bfdf1.elb.eu-west-2.amazonaws.com/api/v1"
+  REACT_APP_WEBSOCKET_URL: "ws://k8s-ingress-external-9a3bc43ef0-48d9d81af72bfdf1.elb.eu-west-2.amazonaws.com/ws"

@@ -16,11 +16,12 @@ resource "aws_s3_bucket" "django_storage" {
   tags = local.tags
 }
 
-# Enable versioning for the bucket
+# Disable versioning for the bucket
 resource "aws_s3_bucket_versioning" "django_storage" {
   bucket = aws_s3_bucket.django_storage.id
+
   versioning_configuration {
-    status = "Enabled"
+    status = "Disabled"
   }
 }
 
@@ -28,10 +29,28 @@ resource "aws_s3_bucket_versioning" "django_storage" {
 resource "aws_s3_bucket_public_access_block" "django_storage" {
   bucket = aws_s3_bucket.django_storage.id
 
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+# Add bucket policy to allow public read access
+resource "aws_s3_bucket_policy" "allow_public_read" {
+  bucket = aws_s3_bucket.django_storage.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid       = "PublicReadGetObject"
+        Effect    = "Allow"
+        Principal = "*"
+        Action    = "s3:GetObject"
+        Resource  = "${aws_s3_bucket.django_storage.arn}/*"
+      },
+    ]
+  })
 }
 
 ############################################
@@ -85,6 +104,8 @@ resource "kubernetes_secret" "django_s3_credentials" {
     AWS_S3_ACCESS_KEY_ID     = aws_iam_access_key.django_s3_user.id
     AWS_S3_SECRET_ACCESS_KEY = aws_iam_access_key.django_s3_user.secret
     AWS_STORAGE_BUCKET_NAME  = aws_s3_bucket.django_storage.id
+    AWS_S3_REGION_NAME       = var.aws_region
+    AWS_S3_SIGNATURE_VERSION = "s3v4"
   }
 
   depends_on = [

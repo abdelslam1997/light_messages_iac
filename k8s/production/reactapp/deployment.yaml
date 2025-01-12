@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: light-messages-reactapp
+  namespace: default  # Add explicit namespace
+  labels:
+    app: light-messages-reactapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: light-messages-reactapp
+  template:
+    metadata:
+      labels:
+        app: light-messages-reactapp
+    spec:
+      containers:
+        - name: frontend-reactapp
+          image: abdelslam1997/light_messages_reactapp:latest
+          # command: ["/bin/sh", "-c", "/start.sh"]
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+          envFrom:
+            - configMapRef:
+                name: reactapp-config
