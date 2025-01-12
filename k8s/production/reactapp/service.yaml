@@ -7,8 +7,8 @@ spec:
   type: ClusterIP
   ports:
     - name: http
-      port: 8000
-      targetPort: http
+      port: 80           # Changed from 8000 to 80
+      targetPort: 80     # Changed to explicit port number
       protocol: TCP
   selector:
     app: light-messages-reactapp
