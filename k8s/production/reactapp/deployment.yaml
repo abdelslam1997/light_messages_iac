@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: frontend-reactapp
-          image: abdelslam1997/light_messages_reactapp:latest
+          image: abdelslam1997/light_messages_frontend:latest
           # command: ["/bin/sh", "-c", "/start.sh"]
           ports:
             - name: http
