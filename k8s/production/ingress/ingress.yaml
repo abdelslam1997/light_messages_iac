@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: light-messages-ingress
   namespace: default
+  annotations:
+    cert-manager.io/v1/cluster-issuer: http-01-production
 spec:
   ingressClassName: external-nginx
   tls:
