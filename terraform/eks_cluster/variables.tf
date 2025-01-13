@@ -16,6 +16,13 @@ variable "environment" {
   default     = "production"
 }
 
+variable "eks_cluster_version" {
+  type        = string
+  description = "EKS cluster version"
+  default     = "1.31"
+
+}
+
 variable "ssh_server_key_secret_arn" {
   type        = string
   description = "SSH private key secret ARN"
