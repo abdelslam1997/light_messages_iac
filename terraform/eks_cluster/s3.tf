@@ -13,7 +13,7 @@ resource "random_string" "bucket_suffix" {
 resource "aws_s3_bucket" "django_storage" {
   bucket = "${var.environment}-django-storage-${random_string.bucket_suffix.result}"
 
-  tags = local.tags
+  tags = local.common_tags
 }
 
 # Disable versioning for the bucket
@@ -58,7 +58,7 @@ resource "aws_s3_bucket_policy" "allow_public_read" {
 ############################################
 resource "aws_iam_user" "django_s3_user" {
   name = "${var.environment}-django-s3-user"
-  tags = local.tags
+  tags = local.common_tags
 }
 
 # Create access keys for the IAM user

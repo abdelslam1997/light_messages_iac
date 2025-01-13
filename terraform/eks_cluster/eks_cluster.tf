@@ -49,7 +49,7 @@ module "eks" {
     }
   }
 
-  tags = merge(local.tags, {
+  tags = merge(local.common_tags, {
     "k8s.io/cluster-autoscaler/enabled"                   = "true"
     "k8s.io/cluster-autoscaler/${local.eks_cluster_name}" = "owned"
   })
