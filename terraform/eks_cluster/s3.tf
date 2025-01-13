@@ -120,28 +120,3 @@ resource "kubernetes_secret" "django_s3_credentials" {
     module.eks.worker_nodes
   ]
 }
-
-############################################
-# Get current AWS account ID
-############################################
-data "aws_caller_identity" "current" {}
-
-############################################
-# Outputs (sensitive information)
-############################################
-output "s3_bucket_name" {
-  description = "Name of the created S3 bucket"
-  value       = aws_s3_bucket.django_storage.id
-}
-
-output "s3_user_access_key" {
-  description = "Access key for the Django S3 user"
-  value       = aws_iam_access_key.django_s3_user.id
-  sensitive   = true
-}
-
-output "s3_user_secret_key" {
-  description = "Secret key for the Django S3 user"
-  value       = aws_iam_access_key.django_s3_user.secret
-  sensitive   = true
-}

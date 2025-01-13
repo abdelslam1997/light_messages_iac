@@ -65,16 +65,3 @@ resource "kubernetes_secret" "light_messages_secrets" {
   depends_on = [helm_release.argocd]
 
 }
-
-##########################################################################################
-# 4) Output the secrets to the console `Debugging purpose` Don't do this in production
-##########################################################################################
-output "secrets-value" {
-  value     = local.ssh_private_key
-  sensitive = true
-}
-
-output "light-messages-secrets" {
-  value     = local.light_messages_secrets
-  sensitive = true
-}

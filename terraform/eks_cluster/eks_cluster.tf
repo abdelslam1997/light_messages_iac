@@ -84,12 +84,3 @@ data "aws_eks_addon_version" "eks_pod_identity_agent" {
   kubernetes_version = var.eks_cluster_version
   most_recent        = true
 }
-
-output "addon_versions" {
-  value = {
-    coredns                = data.aws_eks_addon_version.coredns.version
-    vpc_cni                = data.aws_eks_addon_version.vpc_cni.version
-    kube_proxy             = data.aws_eks_addon_version.kube_proxy.version
-    eks_pod_identity_agent = data.aws_eks_addon_version.eks_pod_identity_agent.version
-  }
-}
