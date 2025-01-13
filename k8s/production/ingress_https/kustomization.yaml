@@ -5,3 +5,4 @@ namespace: default
 
 resources:
   - ingress.yaml
+  - cert_manager_issuer.yaml
