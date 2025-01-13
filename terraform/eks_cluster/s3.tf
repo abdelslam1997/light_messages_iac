@@ -94,7 +94,7 @@ resource "aws_iam_user_policy" "django_s3_policy" {
     aws_s3_bucket.django_storage,
     aws_iam_user.django_s3_user
   ]
-  
+
 }
 
 ############################################

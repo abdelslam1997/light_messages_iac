@@ -5,8 +5,13 @@ metadata:
   namespace: default
 spec:
   ingressClassName: external-nginx
+  tls:
+    - hosts:
+        - k8s-ingress-external-93e8ef6582-3f2161060c2de496.elb.eu-west-2.amazonaws.com
+      secretName: k8s-ingress-external-93e8ef6582-3f2161060c2de496.elb.eu-west-2.amazonaws.com
   rules:
-    - http:
+    - host:
+      http:
         paths:
           - path: /ws
             pathType: Prefix
