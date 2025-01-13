@@ -6,7 +6,7 @@ metadata:
   labels:
     app: light-messages-reactapp
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: light-messages-reactapp
