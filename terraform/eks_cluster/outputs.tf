@@ -85,6 +85,12 @@ output "db_endpoint" {
   sensitive   = false
 }
 
+output "db_host" {
+  description = "The database host"
+  value       = trimprefix(module.db.db_instance_endpoint, "${module.db.db_instance_identifier}.") # Remove the prefix
+  sensitive   = false
+}
+
 output "db_username" {
   description = "The database username"
   value       = module.db.db_instance_username
