@@ -38,3 +38,5 @@ spec:
                 name: light-messages-secrets
             - secretRef:
                 name: django-s3-credentials
+            - secretRef:
+                name: rds-credentials
