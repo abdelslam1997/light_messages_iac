@@ -75,3 +75,24 @@ output "light-messages-secrets" {
   value     = local.light_messages_secrets
   sensitive = true
 }
+
+############################################################
+# Output RDS
+############################################################
+output "db_endpoint" {
+  description = "The database endpoint"
+  value       = module.db.db_instance_endpoint
+  sensitive   = false
+}
+
+output "db_username" {
+  description = "The database username"
+  value       = module.db.db_instance_username
+  sensitive   = false
+}
+
+output "db_password" {
+  description = "The database password"
+  value       = random_password.db_password.result
+  sensitive   = true
+}

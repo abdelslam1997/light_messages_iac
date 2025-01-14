@@ -24,7 +24,8 @@ fi
 
 # Change Directory
 cd argocd_root_app
-
+# Run Terraform init
+terraform init
 # Run Terraform Refresh
 terraform refresh
 
@@ -40,7 +41,8 @@ cd ..
 
 # Change Directory
 cd eks_cluster
-
+# Run Terraform init
+terraform init
 # Run Terraform Refresh
 terraform refresh
 
