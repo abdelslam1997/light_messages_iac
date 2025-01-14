@@ -15,24 +15,20 @@ spec:
       labels:
         app: light-messages-web
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - light-messages-web
-              topologyKey: "topology.kubernetes.io/zone"
       containers:
         - name: backend-web
-          image: abdelslam1997/light_messages_backend:v1.0.24
+          image: abdelslam1997/light_messages_backend:v1.0.25
           command: ["/bin/sh", "-c", "/start.sh"]
           ports:
             - name: http
               containerPort: 8000
               protocol: TCP
+              livenessProbe:
+                httpGet:
+                  path: /api/v1/health   # Define a simple health check endpoint in your app
+                  port: 8000
+                initialDelaySeconds: 10
+                periodSeconds: 15
           resources:
             limits:
               cpu: "500m"
