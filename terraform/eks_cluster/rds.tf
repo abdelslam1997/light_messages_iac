@@ -9,6 +9,13 @@ resource "random_password" "db_password" {
   special = false
 }
 
+resource "aws_db_subnet_group" "database" {
+  name       = "django-database-subnet-group"
+  subnet_ids = module.vpc.private_subnets
+
+  tags = local.common_tags
+}
+
 module "db" {
   source  = "terraform-aws-modules/rds/aws"
   version = "6.10.0"
@@ -27,6 +34,8 @@ module "db" {
   port     = local.db_port
   password = random_password.db_password.result
 
+  db_subnet_group_name = aws_db_subnet_group.database.name
+
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
   subnet_ids             = module.vpc.private_subnets
 
@@ -39,6 +48,12 @@ module "db" {
   backup_retention_period = 0
 
   tags = local.common_tags
+
+  depends_on = [
+    module.vpc,
+    aws_security_group.rds_sg
+  ]
+
 }
 
 resource "aws_security_group" "rds_sg" {
@@ -52,6 +67,9 @@ resource "aws_security_group" "rds_sg" {
     protocol        = "tcp"
     security_groups = [module.eks.cluster_security_group_id]
   }
+  depends_on = [
+    module.eks,
+  ]
 }
 
 #####################################################################
@@ -72,4 +90,5 @@ resource "kubernetes_secret" "rds_credentials" {
     POSTGRES_PORT = module.db.db_instance_port
     DB_URL        = "postgres://${module.db.db_instance_username}:${random_password.db_password.result}@${module.db.db_instance_endpoint}:${module.db.db_instance_port}/${local.db_name}"
   }
+  depends_on = [module.db]
 }

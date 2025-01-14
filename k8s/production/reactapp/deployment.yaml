@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: frontend-reactapp
-          image: abdelslam1997/light_messages_frontend:latest
+          image: abdelslam1997/light_messages_frontend:v1.0.8
           command: ["nginx", "-g", "daemon off;"]
           ports:
             - name: http
