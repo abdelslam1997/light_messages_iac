@@ -96,3 +96,17 @@ output "db_password" {
   value       = random_password.db_password.result
   sensitive   = true
 }
+
+output "db_port" {
+  description = "The database port"
+  value       = module.db.db_instance_port
+  sensitive   = false
+
+}
+
+output "db_url" {
+  description = "The database URL"
+  value       = "postgres://${module.db.db_instance_username}:${random_password.db_password.result}@${module.db.db_instance_endpoint}/${local.db_name}"
+  sensitive   = true
+
+}

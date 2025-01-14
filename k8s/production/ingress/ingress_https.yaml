@@ -9,10 +9,10 @@ spec:
   ingressClassName: external-nginx
   tls:
     - hosts:
-        - k8s-ingress-external-93e8ef6582-3f2161060c2de496.elb.eu-west-2.amazonaws.com
-      secretName: k8s-ingress-external-93e8ef6582-3f2161060c2de496.elb.eu-west-2.amazonaws.com
+        - yourdomain.com
+      secretName: yourdomain.com
   rules:
-    - host: k8s-ingress-external-93e8ef6582-3f2161060c2de496.elb.eu-west-2.amazonaws.com
+    - host: yourdomain.com
       http:
         paths:
           - path: /ws

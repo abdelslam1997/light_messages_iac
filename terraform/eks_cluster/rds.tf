@@ -87,8 +87,8 @@ resource "kubernetes_secret" "rds_credentials" {
     POSTGRES_PASSWORD = random_password.db_password.result
 
     POSTGRES_HOST = module.db.db_instance_endpoint
-    POSTGRES_PORT = module.db.db_instance_port
-    DB_URL        = "postgres://${module.db.db_instance_username}:${random_password.db_password.result}@${module.db.db_instance_endpoint}:${module.db.db_instance_port}/${local.db_name}"
+    POSTGRES_PORT = local.db_port
+    DATABASE_URL  = "postgres://${module.db.db_instance_username}:${random_password.db_password.result}@${module.db.db_instance_endpoint}/${local.db_name}"
   }
   depends_on = [module.db]
 }

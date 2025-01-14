@@ -2,11 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: light-messages-web
-  namespace: default  # Add explicit namespace
+  namespace: default
   labels:
     app: light-messages-web
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: light-messages-web
@@ -15,6 +15,16 @@ spec:
       labels:
         app: light-messages-web
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - light-messages-web
+              topologyKey: "topology.kubernetes.io/zone"
       containers:
         - name: backend-web
           image: abdelslam1997/light_messages_backend:latest
