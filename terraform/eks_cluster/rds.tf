@@ -7,6 +7,10 @@ locals {
 resource "random_password" "db_password" {
   length  = 16
   special = false
+  keepers = {
+    db_name     = local.db_name
+    db_username = local.db_username
+  }
 }
 
 resource "aws_db_subnet_group" "database" {
@@ -32,6 +36,7 @@ module "db" {
   db_name  = local.db_name
   username = local.db_username
   port     = local.db_port
+  manage_master_user_password = false
   password = random_password.db_password.result
 
   db_subnet_group_name = aws_db_subnet_group.database.name
@@ -55,7 +60,12 @@ module "db" {
     },
     {
       name  = "rds.force_ssl"
-      value = "1"
+      value = "0"
+    },
+    {
+      name         = "password_encryption"
+      value        = "scram-sha-256"
+      apply_method = "pending-reboot"
     }
   ]
 
@@ -75,10 +85,12 @@ resource "aws_security_group" "rds_sg" {
 
   # Allow connections from EKS security groups
   ingress {
-    from_port       = local.db_port
-    to_port         = local.db_port
-    protocol        = "tcp"
-    security_groups = [module.eks.cluster_security_group_id, module.eks.node_security_group_id]
+    from_port = local.db_port
+    to_port   = local.db_port
+    protocol  = "tcp"
+    security_groups = [
+      module.eks.node_security_group_id
+    ]
   }
 
   depends_on = [
@@ -92,7 +104,8 @@ resource "aws_security_group" "rds_sg" {
 
 resource "kubernetes_secret" "rds_credentials" {
   metadata {
-    name = "rds-credentials"
+    name      = "rds-credentials"
+    namespace = "default" # Make sure this matches your application's namespace
   }
 
   data = {
@@ -102,7 +115,7 @@ resource "kubernetes_secret" "rds_credentials" {
 
     POSTGRES_HOST = trimprefix(module.db.db_instance_endpoint, "${module.db.db_instance_identifier}.") # Remove the prefix
     POSTGRES_PORT = local.db_port
-    DATABASE_URL  = "postgres://${local.db_username}:${random_password.db_password.result}@${module.db.db_instance_endpoint}/${local.db_name}?sslmode=require"
+    DATABASE_URL  = "postgresql://${local.db_username}:${urlencode(random_password.db_password.result)}@${module.db.db_instance_endpoint}/${local.db_name}"
   }
   depends_on = [module.db]
 }

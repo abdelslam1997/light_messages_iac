@@ -112,7 +112,7 @@ output "db_port" {
 
 output "db_url" {
   description = "The database URL"
-  value       = "postgres://${module.db.db_instance_username}:${random_password.db_password.result}@${module.db.db_instance_endpoint}/${local.db_name}"
+  value       = "postgresql://${local.db_username}:${urlencode(random_password.db_password.result)}@${module.db.db_instance_endpoint}/${local.db_name}?sslmode=require"
   sensitive   = true
 
 }

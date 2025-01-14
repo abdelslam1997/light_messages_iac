@@ -6,7 +6,7 @@ metadata:
   labels:
     app: light-messages-web
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: light-messages-web
@@ -27,7 +27,7 @@ spec:
               topologyKey: "topology.kubernetes.io/zone"
       containers:
         - name: backend-web
-          image: abdelslam1997/light_messages_backend:latest
+          image: abdelslam1997/light_messages_backend:v1.0.24
           command: ["/bin/sh", "-c", "/start.sh"]
           ports:
             - name: http
@@ -43,6 +43,10 @@ spec:
           env:
             - name: SERVICE_TYPE
               value: "web"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
           envFrom:
             - secretRef:
                 name: light-messages-secrets
