@@ -39,4 +39,4 @@ spec:
             - secretRef:
                 name: django-s3-credentials
             - secretRef:
-                name: django-db-credentials
+                name: rds-credentials
