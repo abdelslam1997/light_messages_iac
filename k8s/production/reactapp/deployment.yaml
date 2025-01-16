@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: light-messages-reactapp
-  namespace: default  # Add explicit namespace
+  namespace: default
   labels:
     app: light-messages-reactapp
 spec:
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: frontend-reactapp
-          image: abdelslam1997/light_messages_frontend:v1.0.8
+          image: abdelslam1997/light_messages_frontend:v1.0.9
           command: ["nginx", "-g", "daemon off;"]
           ports:
             - name: http

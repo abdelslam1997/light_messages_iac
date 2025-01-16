@@ -23,12 +23,18 @@ spec:
             - name: http
               containerPort: 8000
               protocol: TCP
-              livenessProbe:
-                httpGet:
-                  path: /api/v1/health   # Define a simple health check endpoint in your app
-                  port: 8000
-                initialDelaySeconds: 10
-                periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 15
           resources:
             limits:
               cpu: "500m"
