@@ -28,6 +28,9 @@ terraform init
 terraform refresh
 # Apply The Changes
 terraform apply -auto-approve
+# Refresh & Apply one more time (Some-times S3 Policy is not applied in first run)
+terraform refresh
+terraform apply -auto-approve
 # Change Directory
 cd ..
 
