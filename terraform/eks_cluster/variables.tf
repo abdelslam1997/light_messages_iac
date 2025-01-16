@@ -22,9 +22,16 @@ variable "vpc_cidr" {
   default     = "10.0.0.0/16"
 }
 
+variable "iac_repo_url" {
+  type        = string
+  description = "IaC repository URL"
+  default     = "git@github.com:abdelslam1997/light_messages_iac.git"
+  
+}
+
 variable "ssh_server_key_secret_arn" {
   type        = string
-  description = "SSH private key secret ARN"
+  description = "SSH private key secret ARN to access the IaC Git repository"
   sensitive   = true
   # Set By Env Var
 }

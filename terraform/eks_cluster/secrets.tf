@@ -26,7 +26,7 @@ resource "kubernetes_secret" "argocd_git_repo" {
   }
 
   data = {
-    url           = "git@github.com:abdelslam1997/light_messages_iac.git"
+    url           = var.iac_repo_url
     sshPrivateKey = local.ssh_private_key
     insecure      = "false"
     enableLfs     = "true"
