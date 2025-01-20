@@ -138,5 +138,4 @@ cd terraform
 
 
 
-**Thank you for reading this readme file. I hope you find it useful. If 
-you have any questions or need help, feel free to contact me at**
+**Thank you for reading this readme file. I hope you find it useful.**
